@@ -15,4 +15,22 @@ aside {
     font-weight: 400;
     font-style: normal;
     font-size: 27px;
+    max-width: 250px;
+    padding: 10px;
+    border-bottom: 2px solid lightgrey;
+}
+
+#city {
+    width: 100%;
+}
+
+#search_button {
+    margin: 5px auto;
+    width: 100%;
+    padding: 2px 10px;
+    font-size: 20px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    background: lightskyblue;
 }
