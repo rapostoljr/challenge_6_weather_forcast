@@ -1,4 +1,7 @@
-var searchButtonClicked = document.getElementById('search_button')
+const searchButtonClicked = document.getElementById('search_button')
+var cityTitle = document.getElementById('name_of_city')
+
+var today = dayjs();
 
 searchButtonClicked.addEventListener("click", function(event) {
     event.preventDefault();
@@ -12,9 +15,13 @@ searchButtonClicked.addEventListener("click", function(event) {
     fetch(apiUrl).then(function (response) {
         console.log(response)
         if (response.ok) {
+            cityTitle.innerHTML = cityName;
+            $('#today_date').text(today.format('[(]MMM D, YYYY[)]'))
             response.json().then(function(data){
                 console.log(data);
             })
+        } else {
+            alert("Please enter a valid response.")
         }
             console.log(response.status);
     })

@@ -1,6 +1,9 @@
 :root {
     --white_text_color: white;
     --search_button_color: lightskyblue;
+    --gradient_color: linear-gradient(90deg, rgba(0,112,255,1) 0%, rgba(74,74,217,1) 25%, rgba(0,0,0,1) 100%);
+    --hover_color: gold;
+    --weather_card: rgb(0, 133, 221);
 }
 
 header {
@@ -11,10 +14,11 @@ header {
     padding: 10px 0;
     text-align: center;
     font-size: 50px;
-    background: linear-gradient(90deg, rgba(0,112,255,1) 0%, rgba(74,74,217,1) 25%, rgba(0,0,0,1) 100%);
+    background: var(--gradient_color);
     height: 65px;
 }
 
+/* SEARCH BOX FEATURE */
 aside {
     font-family: "Rakkas", serif;
     font-weight: 400;
@@ -50,5 +54,45 @@ aside {
     border: none;
     border-radius: 12px;
     color: var(--white_text_color);
-    background: gold;
+    background: var(--hover_color);
+}
+
+/* MAIN CONTENT FEATURE */
+.current_city_searched {
+    display: block;
+    position: relative;
+    top: -130px;
+    left: 330px;
+    width: 60%;
+    border: 1px solid black;
+}
+
+.current_city_searched h2, .current_city_searched p {
+    margin-left: 10px;
+}
+
+h2 {
+font-family: "Rakkas", serif;
+font-weight: 400;
+font-style: normal;
+}
+
+.current_city_future_5 h2{
+    font-size: 30px;
+}
+
+.current_city_future_5 li {
+    list-style: none;
+}
+
+.weather_five_days {
+    display: flex;
+    gap: 25px;
+}
+
+.weather_five_days .weather_day {
+    color: var(--white_text_color);
+    background: var(--weather_card);
+    padding: 20px 20px;
+    border-radius: 10px;
 }
