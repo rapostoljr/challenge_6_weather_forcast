@@ -1,22 +1,19 @@
+const baseURL = 'https://api.openweathermap.org/data/2.5/forecast'
+const apiKey = '32fc4ef284ffcafc2edc15beea698a19';
+
 const searchButtonClicked = document.getElementById('search_button')
 var cityTitle = document.getElementById('name_of_city')
 
 var today = dayjs();
 
-searchButtonClicked.addEventListener("click", function(event) {
-    event.preventDefault();
-    var cityNameInputEl = document.getElementById('city');
-    var cityName = cityNameInputEl.value.trim()
-    if (!cityName) {
-        return;
-    }
+searchButtonClicked.addEventListener("click", (event) => {
+    getAndRenderCity(event)
+})
 
-    const apiKey = '32fc4ef284ffcafc2edc15beea698a19';
-    const apiUrlCity = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&limit=1&appid=${apiKey}`;
 
 
 function getFiveDayWeatherForecast(lat, lon) {
-    const apiUrlCoord = `http://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=5&appid=${apiKey}`;
+    const apiUrlCoord = `${baseURL}/?lat=${lat}&lon=${lon}&cnt=5&appid=${apiKey}`;
 
     fetch(apiUrlCoord).then(function (response) {
         if (response.ok) {
@@ -29,22 +26,52 @@ function getFiveDayWeatherForecast(lat, lon) {
     })
 }
 
-    fetch(apiUrlCity).then(function (response) {
-        if (response.ok) {
-            cityTitle.innerHTML = cityName;
-            $('#today_date').text(today.format('[(]MMM D, YYYY[)]'))
-            response.json().then(function(data){
-                console.log(data);
-                console.log(`this is the length ${data.list.length}`);
-                if (!data.list.length) {
-                    return alert(`Could not find coordinates for ${cityName}`);
-                } else if (data.list.length) {
-                    console.log(`City: ${data.city.name}, Lat: ${data.city.coord.lat}, Lon: ${data.city.coord.lon}`)
-                    getFiveDayWeatherForecast(data.city.coord.lat, data.city.coord.lon);
-                } else {
-                    alert("Please enter a valid response.");
-                }
-            })
+function getAndRenderCity(event){
+    event.preventDefault();
+    var cityNameInputEl = document.getElementById('city');
+    var cityName = cityNameInputEl.value.trim()
+    if (!cityName) {
+        return;
+    }
+
+const apiUrlCity = `${baseURL}?q=${cityName}&limit=1&appid=${apiKey}`;
+
+fetch(apiUrlCity).then((response) => {
+    response.json().then((data) => {
+        if (!response.ok) {
+            return alert ('No response from server.');
         }
+    
+        if (!data.list.length) {
+            return alert(`Could not find coordinates for ${cityName}`);
+        }
+
+        setCityName(cityName)
+        getFiveDayWeatherForecast(data.city.coord.lat, data.city.coord.lon);
     })
+
+    // if (response.ok) {
+    //     setCityName(cityName);
+    //     response.json().then(function(data){
+    //         console.log(data);
+    //         console.log(`this is the length ${data.list.length}`);
+    //         if (!data.list.length) {
+    //             return alert(`Could not find coordinates for ${cityName}`);
+    //         } else if (data.list.length) {
+    //             console.log(`City: ${data.city.name}, Lat: ${data.city.coord.lat}, Lon: ${data.city.coord.lon}`)
+    //             getFiveDayWeatherForecast(data.city.coord.lat, data.city.coord.lon);
+    //         } else {
+    //             alert("Please enter a valid response.");
+    //         }
+    //     })
+    // }
+
 })
+
+
+}
+
+function setCityName(cityName) {
+    cityTitle.innerHTML = cityName;
+    $('#today_date').text(today.format('[(]MMM D, YYYY[)]'))
+}
