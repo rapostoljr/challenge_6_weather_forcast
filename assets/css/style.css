@@ -78,6 +78,9 @@ font-style: normal;
 }
 
 .current_city_future_5 h2{
+    display: flex;
+    position: relative;
+    left: 330px;
     font-size: 30px;
 }
 
@@ -87,6 +90,8 @@ font-style: normal;
 
 .weather_five_days {
     display: flex;
+    position: relative;
+    left: 290px;
     gap: 25px;
 }
 
