@@ -1,8 +1,10 @@
 # CHALLENGE 6 WEATHER FORECAST
 
 ## DESCRIPTION
+Have you ever wondered what the weather is in another city? Well, look no further! In this app, you will be able to type in the city you need the weather for and this app will return the weather for that day. No longer will you be in the unknown of how hot or cold it is going to be, you just simply type in the city name and BOOM! you get the temperature, wind speed, and humidity.
 
 ## HOW TO USE
+To begin, you would first enter the city name you would like the weather information for into the search bar. Once entered, if the city exists, the current weather would then be displayed to your right, as well as 5 days beginning from the current date. Not only will it provide you with the temperature of the city, but it will also provide you with the wind speed and the humidity.
 
 ## ACCEPTANCE CRITERIA
 GIVEN a weather dashboard with form inputs\

@@ -10,8 +10,6 @@ searchButtonClicked.addEventListener("click", (event) => {
     getAndRenderCity(event)
 })
 
-
-
 function getFiveDayWeatherForecast(lat, lon) {
     const apiUrlCoord = `${baseURL}/?lat=${lat}&lon=${lon}&cnt=5&appid=${apiKey}`;
 
@@ -34,44 +32,43 @@ function getAndRenderCity(event){
         return;
     }
 
-const apiUrlCity = `${baseURL}?q=${cityName}&limit=1&appid=${apiKey}`;
+const apiUrlCity = `${baseURL}?q=${cityName}&appid=${apiKey}`;
 
 fetch(apiUrlCity).then((response) => {
     response.json().then((data) => {
+        console.log(data)
         if (!response.ok) {
             return alert ('No response from server.');
-        }
-    
+        }    
         if (!data.list.length) {
             return alert(`Could not find coordinates for ${cityName}`);
         }
 
+        // Filters the forecast to one per day
+        const uniqueForecastDays = [];
+        const fiveDayForecast = data.list.filter(forecast => {
+            const forecastDate = new Date(forecast.dt_txt).getDate();
+            if (!uniqueForecastDays.includes(forecastDate)) {
+                return uniqueForecastDays.push(forecastDate);
+            }
+        })
+        console.log(fiveDayForecast)
+        
         setCityName(cityName)
         getFiveDayWeatherForecast(data.city.coord.lat, data.city.coord.lon);
+        console.log(data.list[0].dt)
+        setCurrentForecast(data.list[0].dt, )
     })
-
-    // if (response.ok) {
-    //     setCityName(cityName);
-    //     response.json().then(function(data){
-    //         console.log(data);
-    //         console.log(`this is the length ${data.list.length}`);
-    //         if (!data.list.length) {
-    //             return alert(`Could not find coordinates for ${cityName}`);
-    //         } else if (data.list.length) {
-    //             console.log(`City: ${data.city.name}, Lat: ${data.city.coord.lat}, Lon: ${data.city.coord.lon}`)
-    //             getFiveDayWeatherForecast(data.city.coord.lat, data.city.coord.lon);
-    //         } else {
-    //             alert("Please enter a valid response.");
-    //         }
-    //     })
-    // }
-
 })
-
 
 }
 
 function setCityName(cityName) {
     cityTitle.innerHTML = cityName;
     $('#today_date').text(today.format('[(]MMM D, YYYY[)]'))
+}
+
+function setCurrentForecast(date, temp, wind, humidity, icon) {
+    var weatherDay0Date = document.querySelector('.weather_day_1 h3');
+    weatherDay0Date.innerHTML = dayjs.unix(date).format('MMM D, YYYY');
 }
