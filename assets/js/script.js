@@ -2,21 +2,33 @@ const baseURL = 'https://api.openweathermap.org/data/2.5/forecast'
 const apiKey = '32fc4ef284ffcafc2edc15beea698a19';
 
 const searchButtonClicked = document.getElementById('search_button');
-var cityTitle = document.getElementById('name_of_city');
-var cityTemp = document.getElementById('current_temp');
-var cityWind = document.getElementById('current_wind');
-var cityHumidity = document.getElementById('current_humidity');
+const cityTitle = document.getElementById('name_of_city');
+const cityTemp = document.getElementById('current_temp');
+const cityWind = document.getElementById('current_wind');
+const cityHumidity = document.getElementById('current_humidity');
 
+const currentWeather = document.querySelector('.current_city_searched');
+const weatherFiveDays = document.querySelector('.weather_five_days');
 
-var weatherFiveDays = document.querySelector('.weather_five_days');
+// const previouslySearchedHTML = document.querySelector('.previously_searched')
 
-var today = dayjs();
+const today = dayjs();
 
 searchButtonClicked.addEventListener("click", (event) => {
     getAndRenderCity(event);
 })
 
-function setFiveDayWeatherForecast(weatherInfo) {
+function setFiveDayWeatherForecast(cityName, weatherInfo, index) {
+    let currentDate = dayjs().format('[(]MMM D, YYYY[)]')
+    if (index === 0) {
+        return `
+        <h2><span id="name_of_city">${cityName}</span> / <span id="today_date">${currentDate}</span></h2>
+        <img src="https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@4x.png"></img>
+        <p id="current_temp">Temp: ${((weatherInfo.main.temp - 273.15) * 1.8 + 32).toFixed(2)}°F</p>
+        <p id="current_wind">Wind: ${weatherInfo.wind.speed}M/S</p>
+        <p id="current_humidity">Humidity: ${weatherInfo.main.humidity}%</p>
+        `;
+    } else {
     return `
     <li class="weather_day"> 
         <h3>${dayjs.unix(weatherInfo.dt).format('MMM D, YYYY')}</h3>
@@ -26,13 +38,15 @@ function setFiveDayWeatherForecast(weatherInfo) {
         <p>Humidity: ${weatherInfo.main.humidity}%</p>
     </li>
     `;
+    }
 }
 
 // Get the city name and puts it into Current City Searched
 function getAndRenderCity(event){
     event.preventDefault();
-    var cityNameInputEl = document.getElementById('city');
-    var cityName = cityNameInputEl.value.trim()
+    const cityNameInputEl = document.getElementById('city');
+    const cityName = cityNameInputEl.value.trim()
+    createPastCityButton(cityName);
     if (!cityName) {
         return;
     }
@@ -50,31 +64,34 @@ fetch(apiUrlCity).then((response) => {
         }
 
         // Filters the forecast to one per day
-        const uniqueForecastDays = [];
+        const individualForecastDays = [];
         const fiveDayForecast = data.list.filter(forecast => {
             const forecastDate = new Date(forecast.dt_txt).getDate();
-            if (!uniqueForecastDays.includes(forecastDate)) {
-                return uniqueForecastDays.push(forecastDate);
+            if (!individualForecastDays.includes(forecastDate)) {
+                return individualForecastDays.push(forecastDate);
             }
         })
 
         // Clears previous data
+        currentWeather.innerHTML = "";
         weatherFiveDays.innerHTML = "";
 
-        // Sets city name
-        setCurrentCityWeatherInfo(cityName);
-
         // Displays 5 day forecast
-        fiveDayForecast.slice(1, 6).forEach(weatherInfo => {
-            weatherFiveDays.insertAdjacentHTML("beforeend", setFiveDayWeatherForecast(weatherInfo));
+        fiveDayForecast.forEach((weatherInfo, index) => {
+            if (index === 0) {
+                currentWeather.insertAdjacentHTML("beforeend", setFiveDayWeatherForecast(cityName, weatherInfo, index));
+            } else {
+                weatherFiveDays.insertAdjacentHTML("beforeend", setFiveDayWeatherForecast(cityName, weatherInfo, index));
+            }
         });
     })
 })
 }
 
-function setCurrentCityWeatherInfo(cityName) {
-    cityTitle.innerHTML = cityName;
-    $('#today_date').text(today.format('[(]MMM D, YYYY[)]'))
-}
-
-
+// creates previously searched cities
+// function createPastCityButton(cityName) {
+//     let pastCities = document.createElement('button')
+//     pastCities.setAttribute('value', cityName);
+//     pastCities.setAttribute('class', 'previously_searched_btn');
+//     previouslySearchedHTML.appendChild(pastCities);
+// }

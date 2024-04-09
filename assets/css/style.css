@@ -4,6 +4,8 @@
     --gradient_color: linear-gradient(90deg, rgba(0,112,255,1) 0%, rgba(74,74,217,1) 25%, rgba(0,0,0,1) 100%);
     --hover_color: gold;
     --weather_card: rgb(0, 133, 221);
+    --previous_search_color: lightgrey;
+    --previous_search_color_hover: purple;
 }
 
 header {
@@ -56,6 +58,38 @@ aside {
     color: var(--white_text_color);
     background: var(--hover_color);
 }
+
+/* PREVIOUSLY SEARCHED CITIES */
+/* .previously_searched {
+    display: grid;
+    position: static;
+    border: 1px solid orange;
+}
+
+#previously_searched_btn {
+    margin: 5px auto;
+    height: 150px;
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    color: var(--white_text_color);
+    background: var(--previous_search_color);
+}
+
+#previously_searched_btn:hover {
+    margin: 5px auto;
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    color: var(--white_text_color);
+    background: var(--previous_search_color_hover);
+}*/
 
 /* MAIN CONTENT FEATURE */
 .current_city_searched {
