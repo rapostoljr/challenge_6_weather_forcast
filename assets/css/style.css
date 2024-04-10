@@ -60,16 +60,16 @@ aside {
 }
 
 /* PREVIOUSLY SEARCHED CITIES */
-/* .previously_searched {
+.previously_searched {
     display: grid;
     position: static;
     border: 1px solid orange;
 }
 
-#previously_searched_btn {
+.previously_searched_btn {
     margin: 5px auto;
     height: 150px;
-    width: 100%;
+    width: 50%;
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -79,9 +79,9 @@ aside {
     background: var(--previous_search_color);
 }
 
-#previously_searched_btn:hover {
+.previously_searched_btn:hover {
     margin: 5px auto;
-    width: 100%;
+    width: 50%;
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -89,7 +89,7 @@ aside {
     border-radius: 12px;
     color: var(--white_text_color);
     background: var(--previous_search_color_hover);
-}*/
+}
 
 /* MAIN CONTENT FEATURE */
 .current_city_searched {

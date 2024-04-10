@@ -10,12 +10,20 @@ const cityHumidity = document.getElementById('current_humidity');
 const currentWeather = document.querySelector('.current_city_searched');
 const weatherFiveDays = document.querySelector('.weather_five_days');
 
-// const previouslySearchedHTML = document.querySelector('.previously_searched')
+const cityNameInputEl = document.getElementById('city');
+const previouslySearchedHTML = document.querySelector('.previously_searched')
 
 const today = dayjs();
 
+previouslySearchedHTML.innerHTML = "";
+
 searchButtonClicked.addEventListener("click", (event) => {
     getAndRenderCity(event);
+    let pastCities = document.createElement('button');
+    pastCities.setAttribute('class', 'previously_searched_btn');
+    const cityNameValue = cityNameInputEl.value;        
+    pastCities.setAttribute('value', cityNameValue);
+    previouslySearchedHTML.appendChild(pastCities);
 })
 
 function setFiveDayWeatherForecast(cityName, weatherInfo, index) {
@@ -44,12 +52,11 @@ function setFiveDayWeatherForecast(cityName, weatherInfo, index) {
 // Get the city name and puts it into Current City Searched
 function getAndRenderCity(event){
     event.preventDefault();
-    const cityNameInputEl = document.getElementById('city');
     const cityName = cityNameInputEl.value.trim()
-    createPastCityButton(cityName);
-    if (!cityName) {
-        return;
-    }
+    // createPastCityButton(cityName);
+    // if (!cityName) {
+    //     return;
+    // }
 
 const apiUrlCity = `${baseURL}?q=${cityName}&appid=${apiKey}`;
 
@@ -91,7 +98,7 @@ fetch(apiUrlCity).then((response) => {
 // creates previously searched cities
 // function createPastCityButton(cityName) {
 //     let pastCities = document.createElement('button')
-//     pastCities.setAttribute('value', cityName);
-//     pastCities.setAttribute('class', 'previously_searched_btn');
-//     previouslySearchedHTML.appendChild(pastCities);
+    // pastCities.setAttribute('name', cityName);
+    // pastCities.setAttribute('class', 'previously_searched_btn');
+    // previouslySearchedHTML.appendChild(pastCities);
 // }
