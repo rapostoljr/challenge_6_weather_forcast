@@ -28,7 +28,6 @@ aside {
     font-size: 27px;
     max-width: 250px;
     padding: 10px;
-    border-bottom: 2px solid lightgrey;
 }
 
 #city {
@@ -36,7 +35,7 @@ aside {
 }
 
 #search_button {
-    margin: 5px auto;
+    margin: 5px 0;
     width: 100%;
     padding: 5px;
     font-size: 15px;
@@ -48,28 +47,16 @@ aside {
 }
 
 #search_button:hover {
-    margin: 5px auto;
-    width: 100%;
-    padding: 5px;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    color: var(--white_text_color);
     background: var(--hover_color);
 }
 
 /* PREVIOUSLY SEARCHED CITIES */
 .previously_searched {
     display: grid;
-    position: static;
-    border: 1px solid orange;
 }
 
 .previously_searched_btn {
-    margin: 5px auto;
-    height: 150px;
-    width: 50%;
+    margin: 5px 0;
     padding: 5px;
     font-size: 15px;
     font-weight: 600;
@@ -80,14 +67,6 @@ aside {
 }
 
 .previously_searched_btn:hover {
-    margin: 5px auto;
-    width: 50%;
-    padding: 5px;
-    font-size: 15px;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    color: var(--white_text_color);
     background: var(--previous_search_color_hover);
 }
 

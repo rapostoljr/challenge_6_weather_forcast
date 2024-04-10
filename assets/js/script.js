@@ -15,16 +15,21 @@ const previouslySearchedHTML = document.querySelector('.previously_searched')
 
 const today = dayjs();
 
-previouslySearchedHTML.innerHTML = "";
-
 searchButtonClicked.addEventListener("click", (event) => {
-    getAndRenderCity(event);
-    let pastCities = document.createElement('button');
-    pastCities.setAttribute('class', 'previously_searched_btn');
-    const cityNameValue = cityNameInputEl.value;        
-    pastCities.setAttribute('value', cityNameValue);
-    previouslySearchedHTML.appendChild(pastCities);
+    let cityName = cityNameInputEl.value
+    getAndRenderCity(event, cityName);
+    createCityButton(cityName);
 })
+
+function createCityButton(cityName) {
+    let button = document.createElement('button');
+    button.setAttribute('class', 'previously_searched_btn');   
+    button.textContent = cityName
+    previouslySearchedHTML.appendChild(button);
+    button.addEventListener("click", (event) => {
+        getAndRenderCity(event, cityName);
+    })
+}
 
 function setFiveDayWeatherForecast(cityName, weatherInfo, index) {
     let currentDate = dayjs().format('[(]MMM D, YYYY[)]')
@@ -50,13 +55,8 @@ function setFiveDayWeatherForecast(cityName, weatherInfo, index) {
 }
 
 // Get the city name and puts it into Current City Searched
-function getAndRenderCity(event){
+function getAndRenderCity(event, cityName){
     event.preventDefault();
-    const cityName = cityNameInputEl.value.trim()
-    // createPastCityButton(cityName);
-    // if (!cityName) {
-    //     return;
-    // }
 
 const apiUrlCity = `${baseURL}?q=${cityName}&appid=${apiKey}`;
 
@@ -94,11 +94,3 @@ fetch(apiUrlCity).then((response) => {
     })
 })
 }
-
-// creates previously searched cities
-// function createPastCityButton(cityName) {
-//     let pastCities = document.createElement('button')
-    // pastCities.setAttribute('name', cityName);
-    // pastCities.setAttribute('class', 'previously_searched_btn');
-    // previouslySearchedHTML.appendChild(pastCities);
-// }
