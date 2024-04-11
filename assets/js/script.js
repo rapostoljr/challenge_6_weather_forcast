@@ -15,9 +15,10 @@ const previouslySearchedHTML = document.querySelector('.previously_searched')
 
 const today = dayjs();
 
-searchButtonClicked.addEventListener("click", (event) => {
+searchButtonClicked.addEventListener("click", async (event) => {
     let cityName = cityNameInputEl.value
-    getAndRenderCity(event, cityName);
+    const response = await getAndRenderCity(event, cityName);
+    if (!response) return;
     createCityButton(cityName);
 })
 
@@ -55,17 +56,16 @@ function setFiveDayWeatherForecast(cityName, weatherInfo, index) {
 }
 
 // Get the city name and puts it into Current City Searched
-function getAndRenderCity(event, cityName){
+async function getAndRenderCity(event, cityName) {
     event.preventDefault();
+    const apiUrlCity = `${baseURL}?q=${cityName}&appid=${apiKey}`;
 
-const apiUrlCity = `${baseURL}?q=${cityName}&appid=${apiKey}`;
-
-// Fetches WeatherAPI based on city name
-fetch(apiUrlCity).then((response) => {
-    response.json().then((data) => {
+    return fetch(apiUrlCity).then((response) => {
         if (!response.ok) {
-            return alert ('No response from server.');
+            throw new Error('No response from server.');
         }    
+        return response.json()
+    }).then((data) => {        
         if (!data.list.length) {
             return alert(`Could not find coordinates for ${cityName}`);
         }
@@ -90,7 +90,7 @@ fetch(apiUrlCity).then((response) => {
             } else {
                 weatherFiveDays.insertAdjacentHTML("beforeend", setFiveDayWeatherForecast(cityName, weatherInfo, index));
             }
-        });
-    })
-})
+        })
+        return true;
+    }).catch(() => false)
 }

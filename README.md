@@ -18,6 +18,6 @@ WHEN I click on a city in the search history\
 THEN I am again presented with current and future conditions for that city
 
 ## VIEWING MY PROJECT
-To view live page, open your browser (preferably Google Chrome), then enter <i>ENTER LIVE PAGE HERE</i> in your address bar.
+To view live page, open your browser (preferably Google Chrome), then enter <i>https://rapostoljr.github.io/challenge_6_weather_forecast/</i> in your address bar.
 
-Link to Deployed Application: <i>ENTER DEPLOYED APPLICATION HERE</i>
+Link to Deployed Application: <i>https://github.com/rapostoljr/challenge_6_weather_forecast.git</i>
